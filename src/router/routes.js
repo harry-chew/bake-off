@@ -1,3 +1,5 @@
+const bakes = require('../../models/bakes');
+
 module.exports = function(app){
 
     app.get('/', (req, res) => {
@@ -14,6 +16,6 @@ module.exports = function(app){
 
     app.get('/admin', (req, res) => {
         //probably need to auth here
-        res.render('admin');
+        res.render('admin', { bakes: bakes });
     });
 }

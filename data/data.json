@@ -1,0 +1,22 @@
+[ 
+  { 
+      "name": "John", 
+      "bake": 1, 
+      "score": 
+        [ 
+            { "look" : 1 }, 
+            { "taste" : 7 }, 
+            { "special" : 3 }
+        ] 
+  }, 
+  { 
+      "name": "Dave", 
+      "bake": 2, 
+      "score": 
+        [ 
+            { "look" : 3 }, 
+            { "taste" : 5 }, 
+            { "special" : 6 }
+        ] 
+  }
+] 
