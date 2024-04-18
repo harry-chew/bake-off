@@ -1,21 +1,20 @@
-const bakes = require('../../models/bakes');
-
+const { render } = require('ejs');
+const Cake = require('../../models/cake');
+const fs = require('fs');
 module.exports = function(app){
 
     app.get('/', (req, res) => {
-        res.render('index');
-    });
-    
-    app.get('/about', (req, res) => {
-        res.render('about');
-    });
-    
-    app.get('/results', (req, res) => {
-        res.render('results');
+        Cake.find().then((result) => {
+            res.render('index', { cakes : result});
+        }).catch((error) => console.log(error)); 
     });
 
-    app.get('/admin', (req, res) => {
-        //probably need to auth here
-        res.render('admin', { bakes: bakes });
+    app.get('/cakes', (req, res) => {
+        res.render('cakes');
+    });
+
+    app.post('/cakes', (req, res) => {
+        const { baker, name } = req.body;
+        const cake = new Cake({ baker, name });
     });
 }

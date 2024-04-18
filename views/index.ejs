@@ -7,6 +7,15 @@
 </head>
 <body>
     <h1>Great Hunted Cow Bake Off</h1>
-    <p>Something to display to the screen.</p>
+
+    <% 
+    if (cakes.length > 0) {
+        cakes.forEach((cake) => { %>
+            <p><%= cake.name %></p>
+        <% });
+    } else { %>
+        <p>No Cakes</p>
+    <% } %>
+    <a href="/cakes">Add</a>
 </body>
 </html>
