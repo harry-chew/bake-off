@@ -12,8 +12,31 @@ h1, h2 {
 
 .content {
     width : 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin : 1rem auto;
 }
+
+.add-cake {
+    width : 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin : 0 auto;
+}
+
+.add-cake>input {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding : 0.5rem;
+    border : 1px solid black;
+}
+
+
 
 .cake {
     display: flex;

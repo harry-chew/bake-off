@@ -1,6 +1,8 @@
 const { render } = require('ejs');
 const Cake = require('../../models/cake');
+const Vote = require('../../models/vote');
 const fs = require('fs');
+
 module.exports = function(app){
 
     app.get('/', (req, res) => {
@@ -31,16 +33,46 @@ module.exports = function(app){
         .catch((error) => console.log(error));
     });
 
-    app.post('/vote/:id', (req, res, next) => {
-        console.log(req.params.id, req.cookies);
-        setCookie(req, res, next);
+    app.post('/vote/:id', setCookie, saveVote, (req, res, next) => {
         res.redirect('/');
     });
 
+    function saveVote(req, res, next) {
+        if (!req.headers.cookie) 
+            return;
+
+        const cookies = req.headers.cookie.split('=');
+        if (!cookies)
+            return;
+
+        let login;
+        cookies.forEach((cookie, index) => {
+            if (cookie === 'login') {
+                login = cookies[index + 1];
+            }
+        });
+
+        const voteObj = {
+            userId : login,
+            cakeId : req.params.id,
+            taste : req.body.taste,
+            look : req.body.look,
+            feel : req.body.feel
+        };
+
+        const vote = new Vote( voteObj );
+        vote.save()
+        .then((result) => {
+            //res.redirect('/');
+            next();
+        })
+        .catch((error) => {console.log(error); next()});
+        console.log(login);
+    }
 
     function setCookie(req, res, next) {
         // read cookies
-        var cookie = req.cookies.cookieName;
+        var cookie = req.headers.cookie;
         if (cookie === undefined)  {
                // no: set a new cookie
             var randomNumber=Math.random().toString();
@@ -53,12 +85,13 @@ module.exports = function(app){
             }
             // Set cookie
             res.cookie('login', randomNumber, options) // options is optional
-            console.log('cookie created successfully');
+            //console.log(randomNumber);
         }
         else {
             // yes, cookie was already present 
-            console.log('cookie exists', cookie);
+            //console.log('cookie exists', cookie);
         } 
-        next(); 
+        //res.redirect('/');
+        next();
     }
 }
