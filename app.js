@@ -2,11 +2,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const safe = require('./safe.js');
+const cookieParser = require('cookie-parser');
 
 mongoose.connect(safe).then(() => {
     //listen to requests (this is the app)
     app.listen(port, () => {
-        console.log(`App started on port: ${port}`);
+        console.log(`App started on port: http://localhost:${port}`);
     });
 }).catch((err) => {
     console.log(err);
@@ -19,6 +20,7 @@ const port = 3000;
 //middleware
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended : true }));
+app.use(cookieParser('somesecretting'));
 
 //app settings
 app.set('view engine', 'ejs');
