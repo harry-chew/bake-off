@@ -23,11 +23,11 @@ h1, h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin : 0 auto;
+    margin : 5rem auto 5rem auto;
 }
 
 .add-cake>input {
-    width: 40%;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,4 +54,26 @@ h1, h2 {
     text-align: center;
     padding : 0.5rem;
     border : 1px solid black;
+}
+
+.details {
+    width : 70%;
+    margin : 5rem auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.details, .details>form>input, .details>form>select {
+    font-size : 2rem;
+}
+
+.details>form>select {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.details>form>input[type='submit'] {
+    border : 1px solid black;
+    padding : 0.5rem;
 }

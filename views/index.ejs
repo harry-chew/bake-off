@@ -12,13 +12,15 @@
     <div class="content">
     <% if (cakes.length > 0) { %>
         <% cakes.forEach((cake) => { %>
-            <a class="cake" href="/vote/<%= cake._id %>"><%= cake.name %></a>
+            <a class="cake" href="/vote/<%= cake._id %>"><%= cake.name %></a><a href="/del/<%= cake._id %>">DEL</a>
         <% }); %>
     <% } else { %>
         <p>No Cakes</p>
     <% } %>
-    <br><br>
+    <br><br><br><br>
     <a class="standard-link" href="/cakes">Add</a>
+    <br><br>
+    <a href="/results" class="standard-link">Results</a>
     </div>
 </body>
 </html>

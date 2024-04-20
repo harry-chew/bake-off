@@ -94,4 +94,28 @@ module.exports = function(app){
         //res.redirect('/');
         next();
     }
+    app.get('/del/:id', (req, res, next) => {
+        Cake.findByIdAndDelete(req.params.id).then((result) => {
+            res.redirect('/');
+        }).catch((error) => console.log(error)); 
+    });
+
+    app.get('/results', (req, res, next) => {
+        Cake.find()
+        .then((results) => { 
+            let cakes = results;
+            Vote.find()
+            .then((result) => {
+                res.render('results', 
+                { 
+                    cakes,
+                    votes : result 
+                });
+            })
+            .catch((error) => console.log(error));
+
+        })
+        .catch((error) => console.log(error));
+
+    });
 }
