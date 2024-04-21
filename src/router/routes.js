@@ -63,7 +63,6 @@ module.exports = function(app){
         const vote = new Vote( voteObj );
         vote.save()
         .then((result) => {
-            //res.redirect('/');
             next();
         })
         .catch((error) => {console.log(error); next()});
@@ -81,17 +80,12 @@ module.exports = function(app){
                 maxAge: 1000 * 60 * 60 * 24 * 30, // would expire after 15 minutes
                 httpOnly: true, // The cookie only accessible by the web server
                 signed: true // Indicates if the cookie should be signed
-                
             }
             // Set cookie
             res.cookie('login', randomNumber, options) // options is optional
-            //console.log(randomNumber);
         }
         else {
-            // yes, cookie was already present 
-            //console.log('cookie exists', cookie);
         } 
-        //res.redirect('/');
         next();
     }
     app.get('/del/:id', (req, res, next) => {
@@ -113,9 +107,7 @@ module.exports = function(app){
                 });
             })
             .catch((error) => console.log(error));
-
         })
         .catch((error) => console.log(error));
-
     });
 }

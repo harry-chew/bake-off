@@ -6,15 +6,7 @@
     <title>Results</title>
 </head>
 <body>
-    <% if (!votes || !cakes) return; %>
-    <% cakes.forEach((cake) => { %>
-        <p><%= cake.name %></p>
-    <% }); %>
-    <% votes.forEach((vote) => { %>
-        
-    <% }); %>
-</body>
-<%
+    <%
 
 let endResult = [];
 
@@ -29,21 +21,24 @@ votes.forEach((vote, index) => {
 cakes.forEach((cake, index) => {
     let thisCake = { cakeId : cake._id, cakeName: cake.name, votes : [] };
     allCakes.push(thisCake);
+    endResult.push(thisCake);
 });
-
 
 allCakes.forEach((cake, index) => {
     let i = index;
     allVotes.forEach((vote, index) => {
         if (cake.cakeId == vote.cakeId) {
-            cake.votes = [...cake.votes, ...[vote]];
+            cake.votes = [...cake.votes, vote];
         }
     });
 });
 
-console.log(endResult);
-console.log(allCakes);
-console.log(allVotes);
+endResult.forEach((result, index) => { %>
+    <% console.log(result); %>
+    <% if (result.votes.length == 1) { %>
+        <p>Name: <%=result.cakeName%> Taste:<%=result.votes[0].taste%> Look: <%=result.votes[0].look%> Feel: <%=result.votes[0].feel%></p>
+    <% } %>
+<% }); %>
+</body>
 
-%>
 </html>
