@@ -71,26 +71,32 @@ function saveVote(req, res, next) {
     let login = req.cookies['login'];
     if (!login)
         return;
+
     
-    const voteObj = {
-        userId : login,
-        cakeId : req.params.id,
-        taste : req.body.taste,
-        look : req.body.look,
-        feel : req.body.feel
-    };
+    Cake.findById(req.params.id).then((result) => {
+        let cakename = "";
+        cakename = result.name;
 
-    //console.log(voteObj);
+        const voteObj = {
+            userId : login,
+            cakeName : cakename,
+            cakeId : req.params.id,
+            taste : req.body.taste,
+            look : req.body.look,
+            feel : req.body.feel
+        };
 
-    const vote = new Vote( voteObj );
-    vote.save()
-    .then((result) => {
-        //console.log(result);
-    })
-    .catch((error) => {console.log(error);});
+        const vote = new Vote( voteObj );
+        vote.save()
+        .then((result) => {
+            //console.log(result);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    });
 }
-
-
 
 app.get('/del/:id', (req, res, next) => {
     Cake.findByIdAndDelete(req.params.id).then((result) => {

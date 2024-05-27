@@ -6,6 +6,10 @@ const voteSchema = new Schema({
         type : String,
         required : true
     },
+    cakeName : {
+        type : String,
+        required : true
+    },
     cakeId : {
         type : String,
         required : true
