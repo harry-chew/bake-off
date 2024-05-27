@@ -4,8 +4,8 @@
   "description": "smol project to track the scores of the great hunted cow bake off challenge",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "build": "node app.js"
+    "start": "nodemon ./api/index.ts",
+    "build": "node ./api/index.ts"
   },
   "author": "Harry Chew",
   "license": "ISC",
