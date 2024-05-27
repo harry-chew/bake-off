@@ -1,10 +1,7 @@
-const { render } = require('ejs');
 const Cake = require('../../models/cake');
 const Vote = require('../../models/vote');
-const fs = require('fs');
 
 module.exports = function(app){
-
     app.get('/', (req, res) => {
         Cake.find().then((result) => {
             res.render('index', { cakes : result});
@@ -33,25 +30,31 @@ module.exports = function(app){
         .catch((error) => console.log(error));
     });
 
-    app.post('/vote/:id', setCookie, saveVote, (req, res, next) => {
+    app.post('/vote/:id', (req, res, next) => {
+        var randomNumber=Math.random().toString();
+        randomNumber=randomNumber.substring(2, randomNumber.length);
+
+        let month = 1000 * 60 * 60 * 24 * 30;
+        const options = {
+            maxAge : month,
+            httpOnly : true
+        };
+        let cookie = req.cookies['login'];
+        if (!cookie || cookie == undefined)
+            res.cookie('login', randomNumber, options);
+
+        //console.log(req.cookies['login']);
+
+        saveVote(req);
+
         res.redirect('/');
     });
 
     function saveVote(req, res, next) {
-        if (!req.headers.cookie) 
+        let login = req.cookies['login'];
+        if (!login)
             return;
-
-        const cookies = req.headers.cookie.split('=');
-        if (!cookies)
-            return;
-
-        let login;
-        cookies.forEach((cookie, index) => {
-            if (cookie === 'login') {
-                login = cookies[index + 1];
-            }
-        });
-
+        
         const voteObj = {
             userId : login,
             cakeId : req.params.id,
@@ -60,34 +63,18 @@ module.exports = function(app){
             feel : req.body.feel
         };
 
+        console.log(voteObj);
+
         const vote = new Vote( voteObj );
         vote.save()
         .then((result) => {
-            next();
+            console.log(result);
         })
-        .catch((error) => {console.log(error); next()});
-        console.log(login);
+        .catch((error) => {console.log(error);});
     }
 
-    function setCookie(req, res, next) {
-        // read cookies
-        var cookie = req.headers.cookie;
-        if (cookie === undefined)  {
-               // no: set a new cookie
-            var randomNumber=Math.random().toString();
-            randomNumber=randomNumber.substring(2,randomNumber.length);
-            let options = {
-                maxAge: 1000 * 60 * 60 * 24 * 30, // would expire after 15 minutes
-                httpOnly: true, // The cookie only accessible by the web server
-                signed: true // Indicates if the cookie should be signed
-            }
-            // Set cookie
-            res.cookie('login', randomNumber, options) // options is optional
-        }
-        else {
-        } 
-        next();
-    }
+
+
     app.get('/del/:id', (req, res, next) => {
         Cake.findByIdAndDelete(req.params.id).then((result) => {
             res.redirect('/');

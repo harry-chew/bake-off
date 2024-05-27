@@ -18,9 +18,9 @@ const app = express();
 const port = 3000;
 
 //middleware
+app.use(cookieParser());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended : true }));
-app.use(cookieParser('somesecretting'));
 
 //app settings
 app.set('view engine', 'ejs');
