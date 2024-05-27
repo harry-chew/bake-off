@@ -132,3 +132,4 @@ dist
 # custom
 information.txt
 safe.js
+.vercel

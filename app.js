@@ -15,7 +15,7 @@ mongoose.connect(safe).then(() => {
 
 //server variables
 const app = express();
-const port = 3000;
+const port = 80;
 
 //middleware
 app.use(cookieParser());
