@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "smol project to track the scores of the great hunted cow bake off challenge",
   "main": "./api/index.ts",
+  "engines" : {
+    "node" : "20.x"
+  },
   "scripts": {
     "start": "nodemon ./api/index.ts",
     "build": "node ./api/index.ts"
