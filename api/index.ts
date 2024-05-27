@@ -80,12 +80,12 @@ function saveVote(req, res, next) {
         feel : req.body.feel
     };
 
-    console.log(voteObj);
+    //console.log(voteObj);
 
     const vote = new Vote( voteObj );
     vote.save()
     .then((result) => {
-        console.log(result);
+        //console.log(result);
     })
     .catch((error) => {console.log(error);});
 }
@@ -104,10 +104,11 @@ app.get('/results', (req, res, next) => {
         let cakes = results;
         Vote.find()
         .then((result) => {
+            let votes = result;
             res.render('results', 
             { 
                 cakes,
-                votes : result 
+                votes 
             });
         })
         .catch((error) => console.log(error));
